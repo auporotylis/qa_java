@@ -17,6 +17,16 @@ public class CatTest {
         List<String> actualFood = cat.getFood();
 
         Assert.assertEquals("Ожидалась еда для хищника: \"Кашка\", \"Молочко\", \"Творожок\"", expectedFood, actualFood);
+    }
+
+    @Test
+    public void getFoodShouldCallEatMeat() throws Exception {
+        Feline mockFeline = Mockito.mock(Feline.class);
+        Mockito.when(mockFeline.eatMeat()).
+                thenReturn(Arrays.asList("Кашка", "Молочко", "Творожок"));
+        Cat cat = new Cat(mockFeline);
+
+        cat.getFood();
         Mockito.verify(mockFeline).eatMeat();
     }
 

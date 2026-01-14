@@ -19,6 +19,17 @@ public class LionTest {
     }
 
     @Test
+    public void getKittensShouldCallGetKittens() throws Exception {
+        Feline mockFeline = Mockito.mock(Feline.class);
+        Mockito.when((mockFeline).getKittens()).thenReturn(2);
+
+        Lion lion = new Lion("Самец", mockFeline);
+        lion.getKittens();
+
+        Mockito.verify(mockFeline).getKittens();
+    }
+
+    @Test
     public void getFoodShouldReturnPredatorFood() throws Exception {
         Feline mockFeline = Mockito.mock(Feline.class);
         Mockito.when(mockFeline.getFood("Хищник")).
@@ -29,6 +40,17 @@ public class LionTest {
         List<String> actualFood = lion.getFood();
 
         Assert.assertEquals("Ожидалась другая еда для льва", expectedFood, actualFood);
+    }
+
+    @Test
+    public void getFoodShouldCallGetFoodForPredator() throws Exception {
+        Feline mockFeline = Mockito.mock(Feline.class);
+        Mockito.when(mockFeline.getFood("Хищник")).
+                thenReturn(Arrays.asList("Кашка", "Молочко", "Творожок"));
+
+        Lion lion = new Lion("Самец", mockFeline);
+        lion.getFood();
+
         Mockito.verify(mockFeline).getFood("Хищник");
     }
 }
